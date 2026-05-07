@@ -10,12 +10,11 @@ import dbConfig from "../config/db.config.js";
 import userModel from "./user.model.js";
 import roleModel from "./role.model.js";
 
-// Creamos una instancia de Sequelize con los parámetros de configuración
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,       // Dirección del servidor de la base de datos
-  dialect: dbConfig.dialect, // Tipo de base de datos (mysql, postgres, etc.)
-  pool: dbConfig.pool,       // Configuración del pool de conexiones
-  port: dbConfig.PORT,       // Puerto en el que se conecta a la base de datos
+const sequelize = new Sequelize(process.env.MYSQL_PUBLIC_URL, {
+  dialect: "mysql",
+  dialectOptions: {
+    connectTimeout: 60000,
+  },
 });
 
 // Creamos un objeto para almacenar los modelos y la instancia de Sequelize
